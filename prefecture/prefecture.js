@@ -7,7 +7,7 @@ window.addEventListener('load', () => {
         "秋田県": "https://t15.pimg.jp/033/472/295/1/33472295.jpg",
         "山形県": "https://t17.pimg.jp/033/472/037/1/33472037.jpg",
         "福島県": "https://t10.pimg.jp/033/472/140/1/33472140.jpg",
-        "茨城県": "https://t14.pimg.jp/037/086/324/1/37086324.jpg",
+        "茨城県": "https://t19.pimg.jp/037/086/109/1/37086109.jpg",
         "栃木県": "https://t14.pimg.jp/037/086/324/1/37086324.jpg",
         "群馬県": "https://t19.pimg.jp/033/472/039/1/33472039.jpg",
         "埼玉県": "https://t19.pimg.jp/037/086/259/1/37086259.jpg",
@@ -49,8 +49,9 @@ window.addEventListener('load', () => {
         "沖縄県": "https://t11.pimg.jp/048/380/521/1/48380521.jpg"
     }
     class Prefecture {
-        constructor(jsonFile) {
+        constructor(jsonFile, numberOfCorrectAnswers) {
             this.jsonFile = jsonFile;
+            this.numberOfCorrectAnswers = numberOfCorrectAnswers;
         }
         question() {
             const x = this.PrefectureJSON()[this.Prefecureromdom()];
@@ -69,7 +70,8 @@ window.addEventListener('load', () => {
         GetImgTag() {
             return document.getElementById("prefectureImg");
         }
-        CheckTheAnswer() {
+
+        checkTheAnswer() {
             const img = this.GetImgTag();
             const answer = img.value;
             const userAnswer = this.UserAnswer();
@@ -77,27 +79,42 @@ window.addEventListener('load', () => {
             console.log(userAnswer);//あとで消す
             if (answer == userAnswer) {
                 alert("congratulations");
+                this.numberOfCorrectAnswers++;
+                console.log(this.numberOfCorrectAnswers);
             } else {
-                alert("shit");
+                alert("let's do your best next time");//英語で次頑張ろうらしいです。
             }
         }
         UserAnswer() {
             return document.getElementById("userAnswer").value;
         }
+
+        nextQusetion(e) {
+            if (e.cancelable) {//そもそもキャンセルできるか？
+                e.preventDefault();// デフォルトの挙動をキャンセル
+                this.question();
+            } else {
+                this.question();
+            }
+        }
     }
-    const game = new Prefecture(prefectureInfo);
+
+    const game = new Prefecture(prefectureInfo, 0);
     game.question();
 
     const dicision = document.getElementById("dicision");
     dicision.addEventListener('click', (e) => {
-        if (e.cancelable) {//そもそもキャンセルできるか？
-            e.preventDefault();// デフォルトの挙動をキャンセル
-            dicision.addEventListener('click', game.CheckTheAnswer(), false);
-        }else{
-            dicision.addEventListener('click', game.CheckTheAnswer(), false);
+        if (e.cancelable) {
+            e.preventDefault();
+            dicision.addEventListener('click', game.checkTheAnswer(), false);
+        } else {
+            dicision.addEventListener('click', game.checkTheAnswer(), false);
         }
     })
 
+    document.getElementById("next").addEventListener('click', (e) => {
+        game.nextQusetion(e);
+    }, false);
 })
 
 
