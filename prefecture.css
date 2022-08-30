@@ -32,8 +32,7 @@ select {
 #medalBox {
     position: relative;
     top: -380px;
-    left: 300%;
-    /*left: 100%;*/
+    left: 100%;
     width: 60px;
     height: 480px;
     border: #B08A1C 0.5px solid;

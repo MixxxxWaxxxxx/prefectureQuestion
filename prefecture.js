@@ -1,5 +1,4 @@
 window.addEventListener('load', () => {
-
     const prefectureInfo = {
         "北海道": "https://thumb.ac-illust.com/f8/f8f304c91778973f413d2b68ce381ed4_t.jpeg",
         "青森県": "https://media.istockphoto.com/illustrations/map-of-aomori-prefecture-illustration-id844637834?k=20&m=844637834&s=612x612&w=0&h=sJbj2WAghQAey5Jy1WKgaz2ZRzWugYtF00qnV88j9S4=",
@@ -50,19 +49,17 @@ window.addEventListener('load', () => {
         "沖縄県": "https://t11.pimg.jp/048/380/521/1/48380521.jpg"
     }
     class Prefecture {
-        constructor(jsonFile, numberOfCorrectAnswers) {
+        constructor(jsonFile) {
             this.jsonFile = jsonFile;
-            this.numberOfCorrectAnswers = numberOfCorrectAnswers;
-            this.prizeNumber = 0;
+            this.numberOfCorrectAnswers = 0;
+            this.prize = 5;
         }
         question() {
             this.selectActive();
-            const x = this.PrefectureJSON()[this.Prefecureromdom()];
-            console.log(x);//あとで消す
+            const randomQuestion = this.PrefectureJSON()[this.Prefecureromdom()];
             const img = this.GetImgTag();
-            console.log(img);//あとで消す
-            img.src = x[1];
-            img.value = x[0];
+            img.src = randomQuestion[1];
+            img.value = randomQuestion[0];
         }
         PrefectureJSON() {
             return Object.entries(this.jsonFile);
@@ -75,35 +72,30 @@ window.addEventListener('load', () => {
         }
 
         checkTheAnswer() {
+            this.selectDisabled();
+
             const img = this.GetImgTag();
             const answer = img.value;
-            const userAnswer = this.UserAnswer();
+            const userAnswer = this.userAnswer();
             console.log(answer);//あとで消す
             console.log(userAnswer);//あとで消す
-            if (answer == userAnswer) {
+            if (answer === userAnswer) {
                 alert("congratulations");
-                this.selectDisabled();
                 this.numberOfCorrectAnswers++;
-                const prize = 5;
-                const b = 1;
-                if (this.numberOfCorrectAnswers >= prize * b)  {
-                    alert("5回正解したのであなたにおめでとうをいいます。");
-                    this.prizeNumber++;
+                if (this.numberOfCorrectAnswers % this.prize === 0) {
+                    alert(`${this.numberOfCorrectAnswers}回正解したのであなたにメダルを上げます。`);
                     const medal = document.createElement("div");
                     medal.classList.add("medal");
                     medal.id = "medal";
                     let medalBox = document.getElementById("medalBox");
-                    medal.textContent = this.prizeNumber;
+                    medal.textContent = this.numberOfCorrectAnswers;
                     medalBox.append(medal);
-                    b++;
                 }
-                console.log(this.numberOfCorrectAnswers);
             } else {
                 alert(`let's do your best next time. 正解は${answer}`);//英語で次頑張ろうらしいです。
-                this.selectDisabled();
             }
         }
-        UserAnswer() {
+        userAnswer() {
             return document.getElementById("userAnswer").value;
         }
         selectDisabled() {
@@ -116,21 +108,15 @@ window.addEventListener('load', () => {
         }
 
         nextQusetion(e) {
-            if (e.cancelable) {//そもそもキャンセルできるか？
-                e.preventDefault();// デフォルトの挙動をキャンセル
-                this.question();
-            } else {
-                this.question();
-            }
+            this.question();
         }
     }
 
-    const game = new Prefecture(prefectureInfo, 0);
+    const game = new Prefecture(prefectureInfo);
     game.question();
 
     const dicision = document.getElementById("dicision");
     dicision.addEventListener('click', (e) => {
-        e.preventDefault();
         game.checkTheAnswer();
     })
 
