@@ -2,9 +2,9 @@ window.addEventListener('load', () => {
     const prefectureInfo = {
         "北海道": "https://thumb.ac-illust.com/f8/f8f304c91778973f413d2b68ce381ed4_t.jpeg",
         "青森県": "https://media.istockphoto.com/illustrations/map-of-aomori-prefecture-illustration-id844637834?k=20&m=844637834&s=612x612&w=0&h=sJbj2WAghQAey5Jy1WKgaz2ZRzWugYtF00qnV88j9S4=",
-        "岩手県": "https://t11.pimg.jp/033/472/031/1/33472031.jpg",
+        "岩手県": "https://t15.pimg.jp/033/472/295/1/33472295.jpg",
         "宮城県": "https://t11.pimg.jp/033/472/031/1/33472031.jpg",
-        "秋田県": "https://t15.pimg.jp/033/472/295/1/33472295.jpg",
+        "秋田県": "https://t11.pimg.jp/033/472/031/1/33472031.jpg",
         "山形県": "https://t17.pimg.jp/033/472/037/1/33472037.jpg",
         "福島県": "https://t10.pimg.jp/033/472/140/1/33472140.jpg",
         "茨城県": "https://t19.pimg.jp/037/086/109/1/37086109.jpg",
