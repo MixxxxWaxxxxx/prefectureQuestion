@@ -1,4 +1,5 @@
 window.addEventListener('load', () => {
+
     const prefectureInfo = {
         "北海道": "https://thumb.ac-illust.com/f8/f8f304c91778973f413d2b68ce381ed4_t.jpeg",
         "青森県": "https://media.istockphoto.com/illustrations/map-of-aomori-prefecture-illustration-id844637834?k=20&m=844637834&s=612x612&w=0&h=sJbj2WAghQAey5Jy1WKgaz2ZRzWugYtF00qnV88j9S4=",
@@ -52,8 +53,10 @@ window.addEventListener('load', () => {
         constructor(jsonFile, numberOfCorrectAnswers) {
             this.jsonFile = jsonFile;
             this.numberOfCorrectAnswers = numberOfCorrectAnswers;
+            this.prizeNumber = 0;
         }
         question() {
+            this.selectActive();
             const x = this.PrefectureJSON()[this.Prefecureromdom()];
             console.log(x);//あとで消す
             const img = this.GetImgTag();
@@ -79,14 +82,37 @@ window.addEventListener('load', () => {
             console.log(userAnswer);//あとで消す
             if (answer == userAnswer) {
                 alert("congratulations");
+                this.selectDisabled();
                 this.numberOfCorrectAnswers++;
+                const prize = 5;
+                const b = 1;
+                if (this.numberOfCorrectAnswers >= prize * b)  {
+                    alert("5回正解したのであなたにおめでとうをいいます。");
+                    this.prizeNumber++;
+                    const medal = document.createElement("div");
+                    medal.classList.add("medal");
+                    medal.id = "medal";
+                    let medalBox = document.getElementById("medalBox");
+                    medal.textContent = this.prizeNumber;
+                    medalBox.append(medal);
+                    b++;
+                }
                 console.log(this.numberOfCorrectAnswers);
             } else {
-                alert("let's do your best next time");//英語で次頑張ろうらしいです。
+                alert(`let's do your best next time. 正解は${answer}`);//英語で次頑張ろうらしいです。
+                this.selectDisabled();
             }
         }
         UserAnswer() {
             return document.getElementById("userAnswer").value;
+        }
+        selectDisabled() {
+            document.getElementById("dicision").disabled = true;
+            return document.getElementById("userAnswer").disabled = true;
+        }
+        selectActive() {
+            document.getElementById("dicision").disabled = false;
+            return document.getElementById("userAnswer").disabled = false;
         }
 
         nextQusetion(e) {
@@ -104,12 +130,8 @@ window.addEventListener('load', () => {
 
     const dicision = document.getElementById("dicision");
     dicision.addEventListener('click', (e) => {
-        if (e.cancelable) {
-            e.preventDefault();
-            dicision.addEventListener('click', game.checkTheAnswer(), false);
-        } else {
-            dicision.addEventListener('click', game.checkTheAnswer(), false);
-        }
+        e.preventDefault();
+        game.checkTheAnswer();
     })
 
     document.getElementById("next").addEventListener('click', (e) => {

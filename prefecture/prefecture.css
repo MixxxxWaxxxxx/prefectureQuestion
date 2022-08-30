@@ -1,19 +1,43 @@
-body{
+body {
     margin: 20px !important;
     border: black 0.5px solid;
     width: 320px;
     height: 480px;
 }
+
 .picture img {
     width: 200px;
     height: 200px;
     margin-top: 10%;
     margin-left: 17%;
 }
-form{
+
+form {
     padding-top: 5%;
 }
-select{
-    margin-top: 10% !important ;
+
+select {
+    margin-top: 10% !important;
     margin-left: 17% !important;
+}
+
+.medal {
+    border-radius: 50%;
+    background-color: #B08A1C;
+    width: 60px;
+    height: 60px;
+    position: relative;
+}
+
+#medalBox {
+    position: relative;
+    top: -380px;
+    left: 300%;
+    /*left: 100%;*/
+    width: 60px;
+    height: 480px;
+    border: #B08A1C 0.5px solid;
+    border: #B08A1C 1px solid;
+    text-align: center;
+    font-size: large;
 }
